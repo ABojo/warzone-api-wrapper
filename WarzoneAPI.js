@@ -1,9 +1,7 @@
-require('dotenv').config();
 const axios = require('axios');
-const loginHelpers = require('./utils/loginHelpers');
 const FormData = require('form-data');
 
-const CoDAPI = () => {
+const WarzoneAPI = () => {
   const session = {
     isLoggedIn: false,
     headers: {
@@ -124,4 +122,4 @@ const CoDAPI = () => {
   };
 };
 
-module.exports = CoDAPI;
+module.exports = WarzoneAPI;
