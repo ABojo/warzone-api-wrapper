@@ -43,83 +43,93 @@ const getAuthCookies = async (username, password, csrf) => {
   return `ACT_SSO_COOKIE=${actSSOCookie}; ACT_SSO_COOKIE_EXPIRY=${expiration}; atkn=${atkn};`;
 };
 
-const WarzoneAPI = () => {
-  const session = {
-    isLoggedIn: false,
-    headers: {
-      Cookie: '',
-    },
-  };
-
-  const requireLogin = (cb) => {
-    return function (platform, username) {
-      if (session.isLoggedIn === true) {
-        return cb(platform, username);
-      } else {
-        throw new Error(
-          'You must call the .login() method with a valid activision email/password before making this request!'
-        );
-      }
-    };
-  };
-
-  const login = async (username, password) => {
-    try {
-      const csrf = await getCSRF();
-      session.headers.Cookie = await getAuthCookies(username, password, csrf);
-      session.isLoggedIn = true;
-    } catch (err) {
-      session.errorMessage = err;
+const requireLogin = function (cb) {
+  return function (platform, username) {
+    if (this.session.isLoggedIn === true) {
+      return cb.call(this, platform, username);
+    } else {
+      throw new Error(
+        'You must call the .login() method with a valid activision email/password before making this request!'
+      );
     }
   };
+};
 
-  const getSessionInfo = () => {
-    return session;
-  };
+const prototype = {
+  login: async function (username, password) {
+    try {
+      const csrf = await getCSRF();
+      this.session.headers.Cookie = await getAuthCookies(
+        username,
+        password,
+        csrf
+      );
+      this.session.isLoggedIn = true;
+    } catch (err) {
+      this.session.errorMessage = err;
+    }
+  },
 
-  const searchPlayer = requireLogin(async (platform, username) => {
+  getSessionInfo: function () {
+    return this.session;
+  },
+
+  searchPlayer: requireLogin(async function (platform, username) {
     const response = await axios(
       `https://my.callofduty.com/api/papi-client/crm/cod/v2/platform/${platform}/username/${username}/search`,
-      { headers: session.headers }
+      { headers: this.session.headers }
     );
 
     return response.data;
-  });
+  }),
 
-  const getStats = requireLogin(async (platform, username) => {
+  getStats: requireLogin(async function (platform, username) {
     const response = await axios(
       `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${username}/profile/type/wz
     `,
-      { headers: session.headers }
+      { headers: this.session.headers }
     );
     return response.data;
+  }),
+};
+
+/* const getStats = requireLogin(async (platform, username) => {
+  const response = await axios(
+    `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${username}/profile/type/wz
+  `,
+    { headers: session.headers }
+  );
+  return response.data;
+});
+
+const getMatches = requireLogin(async (platform, username) => {
+  const response = await axios(
+    `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
+    { headers: session.headers }
+  );
+
+  return response.data;
+});
+
+const getMatchDetails = async (id) => {
+  const response =
+    await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
+  `);
+
+  return response.data;
+};
+
+*/
+
+const WarzoneAPI = () => {
+  return Object.assign(Object.create(prototype), {
+    session: {
+      isLoggedIn: false,
+      headers: {
+        Cookie: '',
+      },
+    },
   });
-
-  const getMatches = requireLogin(async (platform, username) => {
-    const response = await axios(
-      `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
-      { headers: session.headers }
-    );
-
-    return response.data;
-  });
-
-  const getMatchDetails = async (id) => {
-    const response =
-      await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
-    `);
-
-    return response.data;
-  };
-
-  return {
-    login,
-    getSessionInfo,
-    searchPlayer,
-    getStats,
-    getMatches,
-    getMatchDetails,
-  };
 };
 
 module.exports = WarzoneAPI;
