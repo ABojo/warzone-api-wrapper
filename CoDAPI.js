@@ -37,7 +37,16 @@ const CoDAPI = () => {
     return response.data;
   };
 
-  return { login, getSessionInfo, searchPlayer };
+  const getStats = async (platform, username) => {
+    const response = await axios(
+      `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${username}/profile/type/wz
+    `,
+      { headers: session.headers }
+    );
+    return response.data;
+  };
+
+  return { login, getSessionInfo, searchPlayer, getStats };
 };
 
 module.exports = CoDAPI;
