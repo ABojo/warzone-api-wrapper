@@ -91,35 +91,25 @@ const prototype = {
     );
     return response.data;
   }),
+
+  getMatches: requireLogin(async function (platform, username){
+    const response = await axios(
+      `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
+      { headers: session.headers }
+    );
+  
+    return response.data;
+  }),
+
+  getMatchDetails = function (id) {
+    const response =
+      await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
+    `);
+  
+    return response.data;
+  }
 };
 
-/* const getStats = requireLogin(async (platform, username) => {
-  const response = await axios(
-    `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${username}/profile/type/wz
-  `,
-    { headers: session.headers }
-  );
-  return response.data;
-});
-
-const getMatches = requireLogin(async (platform, username) => {
-  const response = await axios(
-    `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
-    { headers: session.headers }
-  );
-
-  return response.data;
-});
-
-const getMatchDetails = async (id) => {
-  const response =
-    await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
-  `);
-
-  return response.data;
-};
-
-*/
 
 const WarzoneAPI = () => {
   return Object.assign(Object.create(prototype), {
