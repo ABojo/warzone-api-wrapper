@@ -1,6 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const loginHelpers = require('./utils/loginHelpers');
+const FormData = require('form-data');
 
 const CoDAPI = () => {
   const session = {
@@ -8,6 +9,48 @@ const CoDAPI = () => {
     headers: {
       Cookie: '',
     },
+  };
+
+  const extractCookie = (string) => {
+    return string.split('=')[1].split(';')[0];
+  };
+
+  const getCSRF = async () => {
+    return extractCookie(
+      (await axios('https://s.activision.com/activision/login')).headers[
+        'set-cookie'
+      ][0]
+    );
+  };
+
+  const getAuthCookies = async (username, password, csrf) => {
+    const body = new FormData();
+    body.append('username', username);
+    body.append('password', password);
+    body.append('remember_me', 'true');
+    body.append('_csrf', csrf);
+
+    const response = await axios.post(
+      'https://s.activision.com/do_login?new_SiteId=cod',
+      body,
+      {
+        headers: {
+          Cookie: `XSRF-TOKEN=${csrf}; new_SiteId=cod;`,
+          ...body.getHeaders(),
+        },
+        maxRedirects: 0,
+        validateStatus: function (status) {
+          return status === 302;
+        },
+      }
+    );
+
+    const cookies = response.headers['set-cookie'];
+    const actSSOCookie = extractCookie(cookies[1]);
+    const expiration = extractCookie(cookies[2]);
+    const atkn = extractCookie(cookies[1]);
+
+    return `ACT_SSO_COOKIE=${actSSOCookie}; ACT_SSO_COOKIE_EXPIRY=${expiration}; atkn=${atkn};`;
   };
 
   const requireLogin = (cb) => {
@@ -24,12 +67,8 @@ const CoDAPI = () => {
 
   const login = async (username, password) => {
     try {
-      const csrf = await loginHelpers.getCSRF();
-      session.headers.Cookie = await loginHelpers.getAuthCookies(
-        username,
-        password,
-        csrf
-      );
+      const csrf = await getCSRF();
+      session.headers.Cookie = await getAuthCookies(username, password, csrf);
       session.isLoggedIn = true;
     } catch (err) {
       session.errorMessage = err;
