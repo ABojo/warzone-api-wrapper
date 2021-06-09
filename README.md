@@ -44,11 +44,18 @@ api.login('valid activision email', 'valid activision password')
 <p>Pass in valid login information to this method to gain access to the methods that require authentication</p>
 
 ```javascript
-api.login('valid activision email', 'valid activision password')
+api.login('valid activision email', 'valid activision password').then(() => //do something);
+```
+
+<h3>Get Session Info</h3>
+<p>Returns the instance's session object so you can view details about the current session</p>
+
+```javascript
+api.getSessionInfo();
 ```
 
 <h3>Search Player</h3>
-<p>This method can be used to check if a player exists</p>
+<p>This method will return a json object containing details about whether the requested players exists</p>
 
 ```javascript
 //Available options for the platform argument are battle, psn, or xbl
@@ -56,7 +63,7 @@ api.searchPlayer('platform', 'username').then((json) => //do something);
 ```
 
 <h3>Get Stats</h3>
-<p>This method will get all of the specified players stats</p>
+<p>This method will return a json object containing the requested players stats</p>
 
 ```javascript
 //Available options for the platform argument are battle, psn, or xbl
@@ -64,9 +71,16 @@ api.getStats('platform', 'username').then((json) => //do something);
 ```
 
 <h3>Get Matches</h3>
-<p>This method will get a liist of a players recent matches</p>
+<p>This method will return a json object containing the requested players recent matches</p>
 
 ```javascript
 //Available options for the platform argument are battle, psn, or xbl
 api.getMatches('platform', 'username').then((json) => //do something);
+```
+
+<h3>Get Match Details</h3>
+<p>This method will return a json object containing all details about the requested match</p>
+
+```javascript
+api.getMatchDetails('match id').then((json) => //do something);
 ```
