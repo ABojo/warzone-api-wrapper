@@ -1,5 +1,5 @@
-import axios from 'axios';
-import FormData from 'form-data';
+const axios = require('axios');
+const FormData = require('form-data');
 
 const extractCookie = (string) => {
   return string.split('=')[1].split(';')[0];
@@ -121,4 +121,4 @@ const WarzoneAPI = () => {
   });
 };
 
-export default WarzoneAPI;
+module.exports = WarzoneAPI;
