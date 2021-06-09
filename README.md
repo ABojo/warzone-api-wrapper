@@ -39,15 +39,34 @@ api.login('valid activision email', 'valid activision password')
 ```
 
 <h1>Methods</h1>
-<p>A list of methods available on instances of the WarzoneAPI() function</p>
 
-<h2>Login</h2>
-<p><b>This method must be called before you request any data!</b> Session tokens will be returned and stored on the instance to authenticate future requests</p>
+<h3>Login</h3>
+<p>Pass in valid login information to this method to gain access to the methods that require authentication</p>
 
 ```javascript
 api.login('valid activision email', 'valid activision password')
 ```
 
+<h3>Search Player</h3>
+<p>This method can be used to check if a player exists</p>
 
+```javascript
+//Available options for the platform argument are battle, psn, or xbl
+api.searchPlayer('platform', 'username').then((json) => //do something);
+```
 
+<h3>Get Stats</h3>
+<p>This method will get all of the specified players stats</p>
 
+```javascript
+//Available options for the platform argument are battle, psn, or xbl
+api.getStats('platform', 'username').then((json) => //do something);
+```
+
+<h3>Get Matches</h3>
+<p>This method will get a liist of a players recent matches</p>
+
+```javascript
+//Available options for the platform argument are battle, psn, or xbl
+api.getMatches('platform', 'username').then((json) => //do something);
+```
