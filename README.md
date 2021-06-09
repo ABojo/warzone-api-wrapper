@@ -41,6 +41,7 @@ api.login('valid activision email', 'valid activision password')
 <h1>Methods</h1>
 
 <h3>Login</h3>
+<img src='https://img.shields.io/badge/No%20Auth%20Needed-%3CCOLOR%3E.svg'>
 <p>Pass in valid login information to this method to gain access to the methods that require authentication</p>
 
 ```javascript
@@ -48,13 +49,24 @@ api.login('valid activision email', 'valid activision password').then(() => //do
 ```
 
 <h3>Get Session Info</h3>
+<img src='https://img.shields.io/badge/No%20Auth%20Needed-%3CCOLOR%3E.svg'>
 <p>Returns the instance's session object so you can view details about the current session</p>
 
 ```javascript
 api.getSessionInfo();
 ```
 
+
+<h3>Get Match Details</h3>
+<img src='https://img.shields.io/badge/No%20Auth%20Needed-%3CCOLOR%3E.svg'>
+<p>This method will return a json object containing all details about the requested match</p>
+
+```javascript
+api.getMatchDetails('match id').then((json) => //do something);
+```
+
 <h3>Search Player</h3>
+<img src='https://img.shields.io/badge/Auth%20Required-red.svg'>
 <p>This method will return a json object containing details about whether the requested players exists</p>
 
 ```javascript
@@ -63,6 +75,7 @@ api.searchPlayer('platform', 'username').then((json) => //do something);
 ```
 
 <h3>Get Stats</h3>
+<img src='https://img.shields.io/badge/Auth%20Required-red.svg'>
 <p>This method will return a json object containing the requested players stats</p>
 
 ```javascript
@@ -71,6 +84,7 @@ api.getStats('platform', 'username').then((json) => //do something);
 ```
 
 <h3>Get Matches</h3>
+<img src='https://img.shields.io/badge/Auth%20Required-red.svg'>
 <p>This method will return a json object containing the requested players recent matches</p>
 
 ```javascript
@@ -78,9 +92,3 @@ api.getStats('platform', 'username').then((json) => //do something);
 api.getMatches('platform', 'username').then((json) => //do something);
 ```
 
-<h3>Get Match Details</h3>
-<p>This method will return a json object containing all details about the requested match</p>
-
-```javascript
-api.getMatchDetails('match id').then((json) => //do something);
-```
