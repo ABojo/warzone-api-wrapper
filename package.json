@@ -1,10 +1,9 @@
 {
-  "name": "cod-api-wrapper",
+  "name": "warzone-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A JS wrapper for the CoD warzone API",
   "scripts": {},
-  "author": "",
+  "author": "AlexBojo",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
