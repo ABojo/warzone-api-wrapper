@@ -1,6 +1,6 @@
 {
   "name": "warzone-api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A JS wrapper for the CoD warzone API",
   "main": "WarzoneAPI.js",
   "scripts": {},

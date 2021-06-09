@@ -101,7 +101,7 @@ const prototype = {
     return response.data;
   }),
 
-  getMatchDetails = function (id) {
+  getMatchDetails = async function (id) {
     const response =
       await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
     `);
