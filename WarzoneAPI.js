@@ -1,5 +1,5 @@
 import axios from 'axios';
-import FormData from 'form-data'
+import FormData from 'form-data';
 
 const extractCookie = (string) => {
   return string.split('=')[1].split(';')[0];
@@ -92,24 +92,23 @@ const prototype = {
     return response.data;
   }),
 
-  getMatches: requireLogin(async function (platform, username){
+  getMatches: requireLogin(async function (platform, username) {
     const response = await axios(
       `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
       { headers: session.headers }
     );
-  
+
     return response.data;
   }),
 
-  getMatchDetails = async function (id) {
+  getMatchDetails: async function (id) {
     const response =
       await axios(`https://www.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/battle/fullMatch/wz/${id}/it
     `);
-  
-    return response.data;
-  }
-};
 
+    return response.data;
+  },
+};
 
 const WarzoneAPI = () => {
   return Object.assign(Object.create(prototype), {
