@@ -10,8 +10,11 @@ npm install warzone-api
 
 <h1>How to use</h1>
 
-To access data from the Warzone API you must first login with a valid activision email and password to get the required session tokens. 
-After a successful login you will then be authorized to make requests to the Warzone API.
+<ol>
+  <li>Create an instance</li>  
+  <li>Call the login method with valid activision login information</li>  
+  <li>Make requests for whatever data you'd like</li>  
+</ol>
 
 ```javascript
 import WarzoneAPI from 'warzone-api'
@@ -26,8 +29,9 @@ const getPlayerStats = async (platform, username) => {
   return response;
 }
 
-//Chaining promises
-api.login('valid activision email', 'valid activision password').then(() => {
+//Promise chaining
+api.login('valid activision email', 'valid activision password')
+.then(() => {
   return api.getStats('psn', 'Bojo704')
 }).then((response) => {
   console.log(response)
