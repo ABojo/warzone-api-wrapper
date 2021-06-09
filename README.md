@@ -38,3 +38,16 @@ api.login('valid activision email', 'valid activision password')
 });
 ```
 
+<h1>Methods</h1>
+<p>A list of methods available on instances of the WarzoneAPI() function</p>
+
+<h2>Login</h2>
+<p><b>This method must be called before you request any data!</b> Session tokens will be returned and stored on the instance to authenticate future requests</p>
+
+```javascript
+api.login('valid activision email', 'valid activision password')
+```
+
+
+
+
