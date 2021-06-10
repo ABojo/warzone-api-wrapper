@@ -1,4 +1,4 @@
-# WarzoneAPI
+# warzone-api-wrapper
 A JS wrapper for the CoD Warzone API
 
 
