@@ -17,7 +17,7 @@ npm install warzone-api
 </ol>
 
 ```javascript
-import WarzoneAPI from 'warzone-api'
+const WarzoneAPI = require('warzone-api')
 
 const api = WarzoneAPI();
 
