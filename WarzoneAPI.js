@@ -95,7 +95,7 @@ const prototype = {
   getMatches: requireLogin(async function (platform, username) {
     const response = await axios(
       `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
-      { headers: session.headers }
+      { headers: this.session.headers }
     );
 
     return response.data;
