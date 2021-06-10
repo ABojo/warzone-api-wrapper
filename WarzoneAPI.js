@@ -70,10 +70,6 @@ const prototype = {
     }
   },
 
-  getSessionInfo: function () {
-    return this.session;
-  },
-
   searchPlayer: requireLogin(async function (platform, username) {
     const response = await axios(
       `https://my.callofduty.com/api/papi-client/crm/cod/v2/platform/${platform}/username/${username}/search`,
