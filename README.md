@@ -1,4 +1,4 @@
-# WarzoneAPI
+# warzone-api-wrapper
 A JS wrapper for the CoD Warzone API
 
 
@@ -47,15 +47,6 @@ api.login('valid activision email', 'valid activision password')
 ```javascript
 api.login('valid activision email', 'valid activision password').then(() => //do something);
 ```
-
-<h3>Get Session Info</h3>
-<img src='https://img.shields.io/badge/No%20Auth%20Needed-%3CCOLOR%3E.svg'>
-<p>Returns the instance's session object so you can view details about the current session</p>
-
-```javascript
-api.getSessionInfo();
-```
-
 
 <h3>Get Match Details</h3>
 <img src='https://img.shields.io/badge/No%20Auth%20Needed-%3CCOLOR%3E.svg'>
