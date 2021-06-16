@@ -72,7 +72,9 @@ const prototype = {
 
   searchPlayer: requireLogin(async function (platform, username) {
     const response = await axios(
-      `https://my.callofduty.com/api/papi-client/crm/cod/v2/platform/${platform}/username/${username}/search`,
+      `https://my.callofduty.com/api/papi-client/crm/cod/v2/platform/${platform}/username/${encodeURI(
+        username
+      )}/search`,
       { headers: this.session.headers }
     );
 
@@ -81,7 +83,9 @@ const prototype = {
 
   getStats: requireLogin(async function (platform, username) {
     const response = await axios(
-      `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${username}/profile/type/wz
+      `https://my.callofduty.com/api/papi-client/stats/cod/v1/title/mw/platform/${platform}/gamer/${encodeURI(
+        username
+      )}/profile/type/wz
     `,
       { headers: this.session.headers }
     );
@@ -90,7 +94,9 @@ const prototype = {
 
   getMatches: requireLogin(async function (platform, username) {
     const response = await axios(
-      `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${username}/matches/wz/start/0/end/0/details`,
+      `https://my.callofduty.com/api/papi-client/crm/cod/v2/title/mw/platform/${platform}/gamer/${encodeURI(
+        username
+      )}/matches/wz/start/0/end/0/details`,
       { headers: this.session.headers }
     );
 
