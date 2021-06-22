@@ -34,8 +34,11 @@ const getAuthCookies = async (username, password, csrf) => {
       },
     }
   );
-
   const cookies = response.headers['set-cookie'];
+
+  if (cookies[0].includes('LOGIN_FAILURE'))
+    throw new Error('Sorry you entered invalid login information!');
+
   const actSSOCookie = extractCookie(cookies[1]);
   const expiration = extractCookie(cookies[2]);
   const atkn = extractCookie(cookies[1]);
@@ -57,17 +60,13 @@ const requireLogin = function (cb) {
 
 const prototype = {
   login: async function (username, password) {
-    try {
-      const csrf = await getCSRF();
-      this.session.headers.Cookie = await getAuthCookies(
-        username,
-        password,
-        csrf
-      );
-      this.session.isLoggedIn = true;
-    } catch (err) {
-      this.session.errorMessage = err;
-    }
+    const csrf = await getCSRF();
+    this.session.headers.Cookie = await getAuthCookies(
+      username,
+      password,
+      csrf
+    );
+    this.session.isLoggedIn = true;
   },
 
   searchPlayer: requireLogin(async function (platform, username) {
