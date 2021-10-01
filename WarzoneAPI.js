@@ -1,10 +1,12 @@
 const axios = require('axios');
 const FormData = require('form-data');
 
+//extracts the value from the passed in cookie
 const extractCookie = (string) => {
   return string.split('=')[1].split(';')[0];
 };
 
+//makes requests for the csrf token thats required to login
 const getCSRF = async () => {
   const response = await axios('https://s.activision.com/activision/login');
   const csrfHeader = response.headers['set-cookie'][0];
@@ -13,6 +15,7 @@ const getCSRF = async () => {
   return csrfToken;
 };
 
+//posts a login request + returns required cookie header for making requests
 const getAuthCookies = async (username, password, csrf) => {
   const body = new FormData();
   body.append('username', username);
@@ -46,6 +49,7 @@ const getAuthCookies = async (username, password, csrf) => {
   return `ACT_SSO_COOKIE=${actSSOCookie}; ACT_SSO_COOKIE_EXPIRY=${expiration}; atkn=${atkn};`;
 };
 
+//wraps methods that require auth cookies so methods that require it cant be used
 const requireLogin = function (cb) {
   return function (platform, username) {
     if (this.session.isLoggedIn === true) {
@@ -58,6 +62,7 @@ const requireLogin = function (cb) {
   };
 };
 
+//the prototype object that contains the methods that each instance of the API will call
 const prototype = {
   login: async function (username, password) {
     const csrf = await getCSRF();
@@ -111,6 +116,7 @@ const prototype = {
   },
 };
 
+//returns the API object with the correct prototype + properties that contain details about its auth status
 const WarzoneAPI = () => {
   return Object.assign(Object.create(prototype), {
     session: {
