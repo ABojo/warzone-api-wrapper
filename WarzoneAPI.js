@@ -6,11 +6,11 @@ const extractCookie = (string) => {
 };
 
 const getCSRF = async () => {
-  return extractCookie(
-    (await axios('https://s.activision.com/activision/login')).headers[
-      'set-cookie'
-    ][0]
-  );
+  const response = await axios('https://s.activision.com/activision/login');
+  const csrfHeader = response.headers['set-cookie'][0];
+  const csrfToken = extractCookie(csrfHeader);
+
+  return csrfToken;
 };
 
 const getAuthCookies = async (username, password, csrf) => {
